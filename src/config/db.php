@@ -6,7 +6,7 @@
 		private $dbhost = 'localhost';
 		private $dbuser = 'root';
 		private $dbpass = '';
-		private $dbname = 'restapi';
+		private $dbname = 'brutal_deluxe';
 		
 		public function connect() {
 			$mysql_connect_str = "mysql:host=$this->dbhost;dbname=$this->dbname";
