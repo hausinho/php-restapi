@@ -7,13 +7,6 @@ export default class ReleaseState {
 		this.getReleases()
 	}
 
-	// @action async getReleases() {
-	// 	return await fetch('/restapi/public/api/releases').then((data) => {
-	// 		console.log('releases data: ', data)
-	// 		this.releases.slice(0, this.releases.length)
-	// 	})
-	// }
-
 	@action async getReleases() {
     let response = await fetch('/restapi/public/api/releases', {
         method: 'get'
