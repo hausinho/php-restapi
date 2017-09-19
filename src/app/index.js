@@ -8,7 +8,6 @@ import Releases from "./components/releases";
 class App extends React.Component {
     constructor() {
         super();
-        console.log('props: ', this)
     }	
     render() {
         return (

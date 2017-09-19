@@ -8,12 +8,12 @@ export default class ReleaseState {
 	}
 
 	@action async getReleases() {
-    let response = await fetch('/restapi/public/api/releases', {
-        method: 'get'
-    })
+		let response = await fetch('/restapi/public/api/releases', {
+			method: 'get'
+		})
 
-    this.releases.slice(0, this.releases.length)
-    this.releases = await response.json();
+		this.releases.slice(0, this.releases.length)
+		this.releases = await response.json();
 	}		
 
 }

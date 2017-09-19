@@ -1,5 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react";
+import '../../css/main.scss';
 
 import ReleaseState from "./releases-state";
 
