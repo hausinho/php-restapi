@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>REST API</title>
+        <link rel="stylesheet" href="dist/app/main.css">
     </head>
     <body>
     	<div>REST API</div>
