@@ -1,15 +1,16 @@
 var webpack = require("webpack");
 var path = require("path");
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var WatchLiveReloadPlugin = require('webpack-watch-livereload-plugin');
+var CleanWebpackPlugin = require('clean-webpack-plugin');
 
 var DIST_DIR = path.resolve(__dirname, "dist");
 var SRC_DIR = path.resolve(__dirname, "src");
 
-
-
 var extractPlugin = new ExtractTextPlugin({
    filename: 'main.css'
 });
+
 
 module.exports = {
     entry: ['babel-polyfill', SRC_DIR + "/app/index.js"],
@@ -41,13 +42,43 @@ module.exports = {
                 test: /\.scss$/,
                 use: extractPlugin.extract({
                     fallback: "style-loader",
-                    use:  ["css-loader", "sass-loader"]
+                    use:  ["css-loader", "sass-loader", "resolve-url-loader"]
                   })                
-            }              
+            },
+            {
+                test: /\.css$/,
+                use:  ["css-loader", "sass-loader", "resolve-url-loader"]
+            },
+            {
+                test: /\.jpe?g$|\.gif$|\.png$/i,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[ext]',
+                            outputPath: 'img/',
+                            publicPath: './'
+                        }
+                    }
+                ]
+            }                      
           ]        
     },
     plugins: [
-        extractPlugin
+        extractPlugin,
+        new WatchLiveReloadPlugin({
+            port: 'localhost',
+            files: [
+                './dist/app/*.css',
+                './dist/**/*.js',
+                './src/app/**/*.png',
+                './src/app/**/*.jpg',
+                './src/app/**/.*.scss',
+                './src/**/*.php',
+                './src//*.js'
+            ]
+        }),
+        new CleanWebpackPlugin(['dist'])        
     ]
 };
 

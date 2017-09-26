@@ -5,7 +5,6 @@
         <link rel="stylesheet" href="dist/app/main.css">
     </head>
     <body>
-    	<div>REST API</div>
 		<div id="app"></div>
 		<script src="dist/app/bundle.js"></script>    	
     </body>

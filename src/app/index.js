@@ -4,6 +4,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import Releases from "./components/releases";
+import './img/bg.jpg';
 
 class App extends React.Component {
     constructor() {
@@ -11,7 +12,7 @@ class App extends React.Component {
     }	
     render() {
         return (
-        	<div>
+        	<div className="container">
         		<Releases />
         	</div>
         )

@@ -3,10 +3,11 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 $app = new \Slim\App;
-// Get all albums
 
+// Get all albums
 $app->get('/api/releases', function(Request $request, Response $response) {
-	$sql = "SELECT * FROM albums";
+
+	$sql = "SELECT * FROM releases";
 	
 	try{
 		$db = new db();
@@ -17,13 +18,14 @@ $app->get('/api/releases', function(Request $request, Response $response) {
 		$releases = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$db = null;
 		echo json_encode($releases);
+	   
+		
 	} catch(PDOException $e) {
 		echo '{"error": {"text": '.$e->getMessage().'}';
 	}
 });
 
 // Get single release
-
 $app->get('/api/releases/{id}', function(Request $request, Response $response) {
 	
 	$id = $request->getAttribute('id');
@@ -35,45 +37,25 @@ $app->get('/api/releases/{id}', function(Request $request, Response $response) {
 		$db = $db->connect();
 		
 		$stmt = $db->query($sql);
-		$release = $stmt->fetchAll(PDO::FETCH_OBJ);
-		$db = null;
-		echo json_encode($release);
+		
+		$releases = $stmt->fetchAll(PDO::FETCH_OBJ);
+		$db = null;	
+		echo json_encode($releases);
 	} catch(PDOException $e) {
 		echo '{"error": {"text": '.$e->getMessage().'}';
 	}
 });
 
-// // Get single band
-
-// $app->get('/api/releases/{band}', function(Request $request, Response $response) {
-	
-	// $band = $request->getAttribute('band');
-	// $sql = "SELECT * FROM albums WHERE band = '$band'";
-	
-	// try{
-		// $db = new db();
-		
-		// $db = $db->connect();
-		
-		// $stmt = $db->query($sql);
-		// $band = $stmt->fetchAll(PDO::FETCH_OBJ);
-		// $db = null;
-		// echo json_encode($band);
-	// } catch(PDOException $e) {
-		// echo '{"error": {"text": '.$e->getMessage().'}';
-	// }
-// });
-
 // Add release
-
 $app->post('/api/releases/add', function(Request $request, Response $response) {
 	
 	$band = $request->getParam('band');
 	$album = $request->getParam('album');
 	$album_cover = $request->getParam('album_cover');
+	$release_date = $request->getParam('release_date');
 	
 	$id = $request->getAttribute('id');
-	$sql = "INSERT INTO albums (band, album, album_cover) VALUES (:band, :album, :album_cover)";
+	$sql = "INSERT INTO albums (band, album, album_cover, release_date) VALUES (:band, :album, :album_cover, :release_date)";
 	
 	try{
 		$db = new db();
@@ -85,6 +67,7 @@ $app->post('/api/releases/add', function(Request $request, Response $response) {
 		$stmt->bindParam(':band', $band);
 		$stmt->bindParam(':album', $album);
 		$stmt->bindParam(':album_cover', $album_cover);
+		$stmt->bindParam(':release_date', $release_date);
 		
 		$stmt->execute();
 		
@@ -94,19 +77,20 @@ $app->post('/api/releases/add', function(Request $request, Response $response) {
 	}
 });
 
-//UPDATE
-
+// UPDATE
 $app->put('/api/releases/update/{id}', function(Request $request, Response $response) {
 	$id = $request->getAttribute('id');
 	$band = $request->getParam('band');
 	$album = $request->getParam('album');
 	$album_cover = $request->getParam('album_cover');
+	$release_date = $request->getParam('release_date');
 	
 	$id = $request->getAttribute('id');
 	$sql = "UPDATE albums SET
 		band = :band,
 		album = :album,
-		album_cover = :album_cover
+		album_cover = :album_cover,
+		release_date = :release_date
 		WHERE id = $id";
 	
 	try{
@@ -119,6 +103,7 @@ $app->put('/api/releases/update/{id}', function(Request $request, Response $resp
 		$stmt->bindParam(':band', $band);
 		$stmt->bindParam(':album', $album);
 		$stmt->bindParam(':album_cover', $album_cover);
+		$stmt->bindParam(':release_date', $release_date);
 		
 		$stmt->execute();
 		
