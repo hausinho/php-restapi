@@ -1,13 +1,36 @@
+@import "../css/fonts.scss";
+
+
 body {
     background: url('/restapi/dist/app/img/bg.jpg') no-repeat center center fixed;
     background-size: cover;
-    padding: 20px;
+    padding: 20px 40px;
     margin: 0;
+    font-family: "norwester";
+    color: #fff;
 }
 
 .wrapper {
-
+    
     .albumWrapper {
         color: #fff;
+        
+
+        p {
+            color: #fff;
+            font-size: 24px;
+            text-transform: uppercase;
+            margin: 0;
+            padding: 5px 0;
+        }
+    }
+
+}
+
+.header {
+    h1 {
+        color: #a48f45;
+        font-size: 48px;
     }
 }
+

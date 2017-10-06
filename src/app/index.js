@@ -4,6 +4,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import Releases from "./components/releases";
+import Header from "./components/header";
 import './img/bg.jpg';
 
 class App extends React.Component {
@@ -13,6 +14,7 @@ class App extends React.Component {
     render() {
         return (
         	<div className="container">
+                <Header />
         		<Releases />
         	</div>
         )

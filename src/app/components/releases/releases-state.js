@@ -1,34 +1,44 @@
 import { observable, action, async } from "mobx"
 
 export default class ReleaseState {
-	@observable releases = [];
+  @observable releases = [];
+  
 
 	constructor() {
 		this.getReleases()
 	}
 
 	@action async getReleases() {
-		// let response = await fetch('/restapi/public/api/releases', {
-		// 	method: 'get'
-		// })
-		// console.log('response: ', response)
 
-		// this.releases.slice(0, this.releases.length)
-		// this.releases = await response.json();
-		// console.log('releases: ', this.releases)
+		const response = await fetch('/restapi/public/api/releases');
 
-		await fetch('/restapi/public/api/releases').then(response => {
 			if(response.ok){
 				response.json().then(data => {
-					console.log('data: ', data)
+
 					this.releases.slice(0, this.releases.length)
-					this.releases = data;
+
+					  let result = {};
+					  let months = 'January February March April May June July August September October November December'.split(' ');
+					  
+					  data.forEach(release => {
+              let date = new Date(release.release_date);
+              let month = date.getMonth();
+              let monthName = months[month]
+              if (!(monthName in result)) {
+                result[monthName] = [];
+              }
+              
+							result[monthName].push(release);
+							
+						});
+	
+					this.releases = result;			 
+					  			  
 				});
 			}
 			else{
-
-			}
-	});		
+				// error
+			}	
 	}		
 
 }

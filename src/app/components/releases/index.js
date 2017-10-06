@@ -12,7 +12,7 @@ export default class Releases extends React.Component {
 		super();
 
 		this.state = new ReleaseState();
-		console.log('release state: ', this.state)
+		console.log('releases state: ', this.state)
 	}
 	render() {
 		return (
@@ -23,17 +23,22 @@ export default class Releases extends React.Component {
 	}
 }
 
-const Albums = observer(({ state, releases, release }) => (
-   <div className="wrapper">
-   	{state.releases.map((release, i) => <Albumdetails state={state} release={release} key={i}/>)}
-   </div>
+const Albums = observer(({ state, releases }) => (
+
+ <div className="wrapper">
+    { Object.keys(state.releases).map((key, i) => { 
+        return <div key={i}>
+          <div><h1>{key}</h1></div>
+            {state.releases[key].map((album, i) => {
+                return <div key={i}><p>{album.band} - {album.release_title} - {moment(album.release_date).format('LL')}</p></div>;
+            })}
+           <div></div></div>
+        })  
+				
+    } 
+
+ </div>
+
 ))
 
-const Albumdetails = observer(({ state, release }) => (
-   <div className="albumWrapper">
-   		<p>{release.band} - {release.release_title} - {release.release_type} - {moment(release.release_date).format('LL')}</p>
-   		<div>
-   			{release.album_cover && <img src={release.album_cover} width="150" height="150" />}
-   		</div>	
- </div>
-))
+

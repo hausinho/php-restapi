@@ -42,12 +42,20 @@ module.exports = {
                 test: /\.scss$/,
                 use: extractPlugin.extract({
                     fallback: "style-loader",
-                    use:  ["css-loader", "sass-loader", "resolve-url-loader"]
+                    use:  ["css-loader", "sass-loader"]
                   })                
             },
             {
                 test: /\.css$/,
-                use:  ["css-loader", "sass-loader", "resolve-url-loader"]
+                use:  ["css-loader", "sass-loader"]
+            },
+            {
+                test: /\.svg$|\.eot$|\.ttf$|\.woff$|\.woff2$/i,
+                use: [
+                    {
+                        loader: 'url-loader',
+                    }
+                ]
             },
             {
                 test: /\.jpe?g$|\.gif$|\.png$/i,
@@ -61,7 +69,7 @@ module.exports = {
                         }
                     }
                 ]
-            }                      
+            }                                    
           ]        
     },
     plugins: [
@@ -74,8 +82,9 @@ module.exports = {
                 './src/app/**/*.png',
                 './src/app/**/*.jpg',
                 './src/app/**/.*.scss',
-                './src/**/*.php',
-                './src//*.js'
+                './src/routes/*.php',
+                './src/routes/*.php',
+                './src/app/**/*.js'
             ]
         }),
         new CleanWebpackPlugin(['dist'])        
