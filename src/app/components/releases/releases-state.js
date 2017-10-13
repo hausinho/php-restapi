@@ -18,7 +18,7 @@ export default class ReleaseState {
 					this.releases.slice(0, this.releases.length)
 
 					  let result = {};
-					  let months = 'January February March April May June July August September October November December'.split(' ');
+					  let months = 'Januar Februar März April Mai Juni Juli August September Oktober November Dezember'.split(' ');
 					  
 					  data.forEach(release => {
               let date = new Date(release.release_date);
