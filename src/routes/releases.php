@@ -9,8 +9,6 @@ $app->get('/api/releases', function(Request $request, Response $response) {
 
 	$sql = "SELECT * FROM releases";
 
-
-	
 	try{
 		$db = new db();
 		
@@ -19,6 +17,7 @@ $app->get('/api/releases', function(Request $request, Response $response) {
 		$stmt = $db->query($sql);
 		$releases = $stmt->fetchAll(PDO::FETCH_OBJ);
 		$db = null;
+
 		echo json_encode($releases);	
 	   
 		
